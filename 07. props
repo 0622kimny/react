@@ -1,0 +1,91 @@
+import React, { useState } from 'react';
+import './App.css';
+
+function App() {
+  
+  let[a,b]=useState(['남자 코트 추천', '강남 우동맛집', '파이썬독학']);
+  let[c,d]=useState(0);
+  let[modal,setModal]=useState(false);
+  let[title,setTitle]=useState(0);
+  let[입력값,입력값변경]=useState('');
+
+  return (
+    
+    <div className='App'>
+      
+      <div className="black-nav">
+        <h1>BLOG</h1>
+      </div>
+
+      <button className='sort' onClick={()=>{
+        let aaa=[...a];
+        aaa.sort();
+        b(aaa);
+        }}
+        >정렬</button>
+      
+      <div className='list'>
+        <h4>{a[0]} 
+          <span onClick={()=>{d(c+1)}}>👍</span> {c} 
+          <button className='change' onClick={()=>{
+            let aa=[...a];
+            aa[0]='여자 코트 추천'
+            b(aa);
+            }}>글변경</button>
+        </h4>
+        <p>2월 17일 발행</p>
+      </div>
+      
+      <div className='list'>
+        <h4>{a[1]}</h4>
+        <p>2월 17일 발행</p>
+      </div>
+      
+      <div className='list'>
+        <h4 onClick={()=>{setmodal(true)}}>
+          {a[2]}
+        </h4>
+        {modal==true?<Modal a={a} b={b} title={title} color="purple"/>:null}
+        <p>2월 17일 발행</p>
+      </div>
+
+      <button onClick={()=>{setTitle(0)}}>글제목0</button>
+      <button onClick={()=>{setTitle(1)}}>글제목1</button>
+      <button onClick={()=>{setTitle(2)}}>글제목2</button>
+
+      a.map(function (v,i) {
+        return (
+          <div className="list" key={i}>
+            <h4 onClick={()=>{
+              setModal(true);setTitle(i)
+            }}>{a[i]}<span onClick={()=>{
+              d(c+1)
+            }}>👍</span>{c}</h4>
+            <p>2월 17일 발행</p>
+          </div>
+        );
+      });
+
+      <input onChange={입력값변경(e.target.value)=>{
+
+      }}/>
+
+
+    </div>
+  );
+}
+
+function Modal (props) {
+  return (
+    <div className='modal' style={{background: props.color}}>
+      <h4>{props.a[props.title]}</h4>
+      <p>날짜</p>
+      <p>상세내용</p>
+      <button onClick={()=>{
+        props.b()
+      }}>글수정</button>
+    </div>
+  )
+}
+
+export default App;
